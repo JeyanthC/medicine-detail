@@ -2,7 +2,6 @@ package com.jeyanth.medicine.service;
 
 import com.jeyanth.medicine.model.MedicineDetail;
 import com.jeyanth.medicine.repository.MedicineRepository;
-import com.jeyanth.medicine.resource.PostCSVFileController;
 import com.jeyanth.medicine.utils.CSVUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,11 +36,13 @@ public class PostCSVFileService {
         try {
             medicineDetailList = CSVUtils.read(MedicineDetail.class, csvFile.getInputStream());
             recordCount = medicineDetailList.stream().count();
+            LOGGER.info("Uploading {} records to the database", recordCount);
             medicineDetailList.stream().filter(Objects::nonNull).forEach(medicineDetail -> repository.save(medicineDetail));
         } catch (Exception exp) {
-            LOGGER.error("Unable to upload file to the database {}",exp.getMessage());
+            LOGGER.error("Unable to upload file to the database {}", exp.getMessage());
         }
 
+        LOGGER.info("Updated {} records into the database", recordCount);
         return responseToReturn.append(recordCount).append(RETURN_RESPONSE).toString();
 
     }

@@ -25,7 +25,7 @@ public class PostCSVFileController {
      */
     @PostMapping(value = "/uploadCsV", consumes = "multipart/form-data")
 
-    public ResponseEntity addCsvToDB(@RequestPart("file") MultipartFile file) {
+    public ResponseEntity addCsvToDB(@RequestPart("file")  final MultipartFile file) {
 
         LOGGER.info("Begin Upload file to DB");
         return ResponseEntity.ok(fileService.uploadFile(file));

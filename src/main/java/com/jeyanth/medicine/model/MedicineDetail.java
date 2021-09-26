@@ -96,4 +96,20 @@ public class MedicineDetail {
     public void setHsn_code(String hsn_code) {
         this.hsn_code = hsn_code;
     }
+
+    @Override
+    public String toString() {
+        return "MedicineDetail{" +
+                "c_name='" + c_name + '\'' +
+                ", c_batch_no='" + c_batch_no + '\'' +
+                ", d_expiry_date='" + d_expiry_date + '\'' +
+                ", n_balance_qty='" + n_balance_qty + '\'' +
+                ", c_packaging='" + c_packaging + '\'' +
+                ", c_unique_code='" + c_unique_code + '\'' +
+                ", c_schemes='" + c_schemes + '\'' +
+                ", n_mrp='" + n_mrp + '\'' +
+                ", c_manufacturer='" + c_manufacturer + '\'' +
+                ", hsn_code='" + hsn_code + '\'' +
+                '}';
+    }
 }

@@ -17,7 +17,7 @@ public class CSVUtils {
 
     /**
      * @param clazz - Class for which data has to be loaded from CSV
-     * @param stream - InputFile converted as inputstream for CSV operations
+     * @param stream - InputFile converted as inputStream for CSV operations
      * @param <T> - Object for which data has to be loaded from CSV
      * @return List of objects read from CSV file
      */
