@@ -3,7 +3,7 @@ package com.jeyanth.medicine.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document( collection = "MedicineDetail")
+@Document(collection = "MedicineDetail")
 public class MedicineDetail {
 
     private String c_name;

@@ -17,8 +17,12 @@ public class GetSearchMedicineController {
     @Autowired
     private MedicineRepository repository;
 
+    /**
+     * @param medicineName - Medicine name to fetch records from DB
+     * @return Response with fetched data in response body
+     */
     @GetMapping("/searchMedicine/{medicineName}")
-    public ResponseEntity<List<MedicineDetail>> searchMedicines(@PathVariable String medicineName){
+    public ResponseEntity<List<MedicineDetail>> searchMedicines(@PathVariable String medicineName) {
         return ResponseEntity.ok(repository.findByName(medicineName));
     }
 

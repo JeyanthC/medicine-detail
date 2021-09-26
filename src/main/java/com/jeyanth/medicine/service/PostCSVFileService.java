@@ -1,51 +1,50 @@
 package com.jeyanth.medicine.service;
 
-import com.fasterxml.jackson.databind.MappingIterator;
-import com.fasterxml.jackson.dataformat.csv.CsvMapper;
-import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.jeyanth.medicine.model.MedicineDetail;
 import com.jeyanth.medicine.repository.MedicineRepository;
+import com.jeyanth.medicine.resource.PostCSVFileController;
 import com.jeyanth.medicine.utils.CSVUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStream;
 import java.util.List;
 import java.util.Objects;
 
 @Service
 public class PostCSVFileService {
 
-    List<MedicineDetail> medicineDetailList;
+    private static final String RETURN_RESPONSE = " records uploaded to database";
 
-    private static final String STRING_TO_RETURN = "Pls return fine";
+    Logger LOGGER = LoggerFactory.getLogger(PostCSVFileService.class);
+
+    private StringBuilder responseToReturn = new StringBuilder();
+    private long recordCount = 0;
 
     @Autowired
     private MedicineRepository repository;
 
 
+    /**
+     * @param csvFile - Input file for data upload
+     * @return message containing number of records uploaded if successful
+     */
+    public String uploadFile(MultipartFile csvFile) {
+        List<MedicineDetail> medicineDetailList;
 
-    public String uploadFile(InputStream csvFile){
-        medicineDetailList = CSVUtils.read(MedicineDetail.class,csvFile);
+        try {
+            medicineDetailList = CSVUtils.read(MedicineDetail.class, csvFile.getInputStream());
+            recordCount = medicineDetailList.stream().count();
+            medicineDetailList.stream().filter(Objects::nonNull).forEach(medicineDetail -> repository.save(medicineDetail));
+        } catch (Exception exp) {
+            LOGGER.error("Unable to upload file to the database {}",exp.getMessage());
+        }
 
-        medicineDetailList.stream().filter(Objects::nonNull).forEach(medicineDetail -> repository.save(medicineDetail));
-
-        return STRING_TO_RETURN;
+        return responseToReturn.append(recordCount).append(RETURN_RESPONSE).toString();
 
     }
-
-
-//    private List<MedicineDetail> fetchMedicineDetailsFromFile(MultipartFile filename) throws Exception {
-//        CsvSchema orderLineSchema = CsvSchema.emptySchema().withHeader();
-//        CsvMapper csvMapper = new CsvMapper();
-//        MappingIterator<MedicineDetail> orderLines = csvMapper.readerFor(MedicineDetail.class)
-//                .with(orderLineSchema)
-//                .readValues(filename.getBytes());
-//
-//        return orderLines.readAll();
-//
-//    }
 
 
 }

@@ -6,18 +6,16 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Repository
 public interface MedicineRepository extends MongoRepository<MedicineDetail, String> {
 
     @Query("{'c_name': /.*?0.*/} ")
-    List<MedicineDetail> findByName(String name);
+    List<MedicineDetail> findByName(String name); // Fetch list of medicines by medicine name  - allows for partial strings
 
     @Query("{'c_unique_code': ?0}")
-    List<MedicineDetail> findByCode(String uniqueId);
-
+    List<MedicineDetail> findByCode(String uniqueId); //Fetch list of medicines from database using Unique IDs
 
 
 }

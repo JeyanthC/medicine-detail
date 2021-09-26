@@ -16,6 +16,10 @@ public class GetMedicineDetailsController {
     @Autowired
     private MedicineRepository repository;
 
+    /**
+     * @param uniqueId - unique id to fetch data from database
+     * @return list of medicines corresponding to the unique id
+     */
     @GetMapping("/getMedicineDetails/{uniqueId}")
     public ResponseEntity<List<MedicineDetail>> searchMedicines(@PathVariable String uniqueId) {
 
