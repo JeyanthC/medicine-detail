@@ -11,6 +11,10 @@ import java.util.List;
 @Repository
 public interface MedicineRepository extends MongoRepository<MedicineDetail, String> {
 
+    /**
+     * @param name - Medicine name that has to be queried
+     * @return the list of medicines that match the medicine name parameter input
+     */
     @Query("{'c_name': /.*?0.*/} ")
     List<MedicineDetail> findByName(String name); // Fetch list of medicines by medicine name  - allows for partial strings
 
